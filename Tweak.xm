@@ -1,5 +1,7 @@
+#include <substrate.h>
+#include <UIKit/UIKit.h>
 
-#pragma mark - Forward declarations
+typedef void* CDUnknownBlockType;
 
 @interface SpringBoard : NSObject
 - (void)_relaunchSpringBoardNow;
@@ -9,23 +11,35 @@
 @property(readonly, assign, nonatomic) NSString* displayIdentifier;
 @end
 
-#pragma mark - Hooks
+#pragma mark iOS 8 (or legacy mode)
 
 %hook SBAppSwitcherController
 
-// Allow the SpringBoard display item to be removed (swiped up)
--(BOOL)switcherScroller:(id)scroller isDisplayItemRemovable:(id)removable {
-	return YES;
+- (_Bool)switcherScroller:(id)arg1 isDisplayItemRemovable:(id)arg2 {
+    return YES; /* maybe check if item == springboard first */
 }
 
-// hook the method that handles the removal of a display item
--(void)switcherScroller:(id)scroller displayItemWantsToBeRemoved:(SBDisplayItem*)beRemoved {
-	if ([beRemoved.displayIdentifier isEqualToString:@"com.apple.springboard"]) { 
-		// springboard has been removed, respring the device
-		[(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
-		break;
-	}
-	%orig; //to kill other apps
+- (void)switcherScroller:(id)arg1 displayItemWantsToBeRemoved:(SBDisplayItem *)arg2 {
+    if ([arg2.displayIdentifier isEqualToString:@"com.apple.springboard"]) {
+        [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
+    }
+}
+
+%end
+
+#pragma mark iOS 9
+
+%hook SBDeckSwitcherViewController
+
+- (_Bool)isDisplayItemOfContainerRemovable:(id)arg1 {
+    return YES;
+}
+
+- (void)removeDisplayItem:(SBDisplayItem *)arg1 updateScrollPosition:(_Bool)arg2 forReason:(long long)arg3 completion:(CDUnknownBlockType)arg4 {
+    if ([arg1.displayIdentifier isEqualToString:@"com.apple.springboard"]) {
+        [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
+    }
+    %orig;
 }
 
 %end

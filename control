@@ -1,9 +1,9 @@
-Package: com.razzile.easyrespring
+Package: org.satorify.easyrespring
 Name: EasyRespring
 Depends: mobilesubstrate
-Version: 0.0.1
+Version: 1.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
-Maintainer: Razzile
-Author: Razzile
+Description: Respring your device by removing the springboard card from the app switcher. supports ios 8 and 9
+Maintainer: Satori
+Author: Satori
 Section: Tweaks
