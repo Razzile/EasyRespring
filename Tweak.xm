@@ -23,6 +23,7 @@ typedef void* CDUnknownBlockType;
     if ([arg2.displayIdentifier isEqualToString:@"com.apple.springboard"]) {
         [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
     }
+    %orig;
 }
 
 %end
