@@ -1,7 +1,7 @@
 Package: org.satorify.easyrespring
 Name: EasyRespring
 Depends: mobilesubstrate
-Version: 1.0
+Version: 1.1
 Architecture: iphoneos-arm
 Description: Respring your device by removing the springboard card from the app switcher. supports ios 8 and 9
 Maintainer: Satori

@@ -1,10 +1,10 @@
 #include <substrate.h>
-#include <UIKit/UIKit.h>
 
 typedef void* CDUnknownBlockType;
 
-@interface SpringBoard : NSObject
-- (void)_relaunchSpringBoardNow;
+@interface FBSystemService : NSObject
++(id)sharedInstance;
+-(void)exitAndRelaunch:(BOOL)arg1;
 @end
 
 @interface SBDisplayItem : NSObject
@@ -21,7 +21,7 @@ typedef void* CDUnknownBlockType;
 
 - (void)switcherScroller:(id)arg1 displayItemWantsToBeRemoved:(SBDisplayItem *)arg2 {
     if ([arg2.displayIdentifier isEqualToString:@"com.apple.springboard"]) {
-        [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
+        [[%c(FBSystemService) sharedInstance] exitAndRelaunch:YES];
     }
     %orig;
 }
@@ -38,7 +38,7 @@ typedef void* CDUnknownBlockType;
 
 - (void)removeDisplayItem:(SBDisplayItem *)arg1 updateScrollPosition:(_Bool)arg2 forReason:(long long)arg3 completion:(CDUnknownBlockType)arg4 {
     if ([arg1.displayIdentifier isEqualToString:@"com.apple.springboard"]) {
-        [(SpringBoard *)[UIApplication sharedApplication] _relaunchSpringBoardNow];
+        [[%c(FBSystemService) sharedInstance] exitAndRelaunch:YES];
     }
     %orig;
 }
