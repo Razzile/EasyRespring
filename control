@@ -4,6 +4,6 @@ Depends: mobilesubstrate
 Version: 1.1
 Architecture: iphoneos-arm
 Description: Respring your device by removing the springboard card from the app switcher. supports ios 8 and 9
-Maintainer: DGh0st
-Author: DGh0st
+Maintainer: Satori
+Author: Satori
 Section: Tweaks
